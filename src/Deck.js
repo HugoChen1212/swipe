@@ -18,9 +18,15 @@ class Deck extends Component {
   }
 
   getCardStyle() {
+    const { position } = this.state;
+    const rotate = position.x.interpolate({
+      inputRange: [-500, 0, 500],
+      outputRange: ['-120deg', '0deg', '120deg']
+    });
+
     return {
-      ...this.state.position.getLayout(),
-      transform: [{rotate: '45deg' }]
+      ...position.getLayout(),
+      transform: [{rotate}]
     };
   }
 
@@ -31,7 +37,7 @@ class Deck extends Component {
         return (
           <Animated.View
             key={item.id}
-            style={this.state.position.getLayout()}
+            style={this.getCardStyle()}
             {...this.state.panResponder.panHandlers}>
             {this.props.renderCard(item)}
            </Animated.View>
